@@ -1,0 +1,9 @@
+{
+  "blogPosts": [
+    {
+      "id": 1,
+      "Title": "json-server",
+      "Author": "typicode"
+    }
+  ]
+}
