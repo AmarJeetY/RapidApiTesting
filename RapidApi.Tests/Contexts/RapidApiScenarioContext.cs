@@ -2,7 +2,7 @@
 
 namespace RapidApiTests.Contexts
 {
-    public abstract class RapidApiScenarioContext
+    public class RapidApiScenarioContext
     {
         public ApiResponse GetRapidApiResponse { get; internal set; }
         public ApiResponse PostRapidApiResponse { get; internal set; }

@@ -80,16 +80,16 @@ namespace RapidApiTests.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="Test Simple API Get request")]
+        [Xunit.SkippableFactAttribute(DisplayName="Test Simple API Get request for Coin Gecko")]
         [Xunit.TraitAttribute("FeatureTitle", "Feature for testing RapidApi MarketPlace APIs")]
-        [Xunit.TraitAttribute("Description", "Test Simple API Get request")]
+        [Xunit.TraitAttribute("Description", "Test Simple API Get request for Coin Gecko")]
         [Xunit.TraitAttribute("Category", "RapidAPI")]
-        public virtual void TestSimpleAPIGetRequest()
+        public virtual void TestSimpleAPIGetRequestForCoinGecko()
         {
             string[] tagsOfScenario = new string[] {
                     "RapidAPI"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Test Simple API Get request", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Test Simple API Get request for Coin Gecko", null, tagsOfScenario, argumentsOfScenario, this._featureTags);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

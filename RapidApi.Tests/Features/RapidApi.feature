@@ -1,7 +1,7 @@
 ﻿Feature:  Feature for testing RapidApi MarketPlace APIs
 
 @RapidAPI
-Scenario: Test Simple API Get request
+Scenario: Test Simple API Get request for Coin Gecko
 	Given I have created a new blog post:
 	| Field  | Value       |
 	| Title  | GetTestPost |
