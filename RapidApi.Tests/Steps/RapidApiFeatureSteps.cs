@@ -11,12 +11,12 @@ using TechTalk.SpecFlow.Assist;
 namespace RapidApiTests.Steps
 {
     [Binding]
-    public class TemplateFeatureSteps
+    public class RapidApiFeatureSteps
     {
         private const string ApiRootUrl = "http://localhost:3000";
-        private readonly TemplateScenarioContext _scenarioContext;
+        private readonly RapidApiScenarioContext _scenarioContext;
 
-        public TemplateFeatureSteps(TemplateScenarioContext scenarioContext)
+        public RapidApiFeatureSteps(RapidApiScenarioContext scenarioContext)
         {
             _scenarioContext = scenarioContext;
         }
@@ -45,23 +45,12 @@ namespace RapidApiTests.Steps
         [When(@"I get the created blog post")]
         public void WhenIGetTheCreatedPost()
         {
-            var createdPost = _scenarioContext.CreateBlogPostResponse.ParseResponse<BlogPost>();
+            var createdPost = _scenarioContext.PostRapidApiResponse.ParseResponse<BlogPost>();
             var getRequest = new WebRequestBuilder($"{ApiRootUrl}/blogPosts/{createdPost.id}")
                 .WithRequestMethod(HttpMethod.Get)
                 .Build();
 
-            _scenarioContext.GetBlogPostResponse = ApiRequestProcessor.Call(getRequest);
-        }
-
-        [When(@"I delete the created blog post")]
-        public void WhenIDeleteTheCreatedPost()
-        {
-            var createdPost = _scenarioContext.CreateBlogPostResponse.ParseResponse<BlogPost>();
-            var deleteRequest = new WebRequestBuilder($"{ApiRootUrl}/blogPosts/{createdPost.id}")
-                .WithRequestMethod(HttpMethod.Delete)
-                .Build();
-
-            _scenarioContext.DeleteBlogPostResponse = ApiRequestProcessor.Call(deleteRequest);
+            _scenarioContext.GetRapidApiResponse = ApiRequestProcessor.Call(getRequest);
         }
 
         [When(@"I create a new blog post:")]
@@ -70,23 +59,10 @@ namespace RapidApiTests.Steps
             CreateNewBlogPost(table);
         }
 
-        [When(@"I get a blog post from an authorised endpoint")]
-        public void WhenIGetABlogPostFromAnAuthorisedEndpoint()
-        {
-            var createdPost = _scenarioContext.CreateBlogPostResponse.ParseResponse<BlogPost>();
-            var authResponse = _scenarioContext.AuthResponse.ParseResponse<AuthApiResponse>();
-            var getRequest = new WebRequestBuilder($"{ApiRootUrl}/blogPosts/{createdPost.id}")
-                .WithRequestMethod(HttpMethod.Get)
-                .WithOAuthToken(authResponse.access_token)
-                .Build();
-
-            _scenarioContext.GetBlogPostResponse = ApiRequestProcessor.Call(getRequest);
-        }
-
         [Then(@"the result should be:")]
         public void ThenTheResultShouldBe(Table table)
         {
-            var getBlogPostResponse = _scenarioContext.GetBlogPostResponse.ParseResponse<BlogPost>();
+            var getBlogPostResponse = _scenarioContext.GetRapidApiResponse.ParseResponse<BlogPost>();
             var expectedBlogPost = table.CreateInstance<BlogPost>();
 
             getBlogPostResponse.Title.Should().Be(expectedBlogPost.Title);
@@ -118,7 +94,7 @@ namespace RapidApiTests.Steps
                 .WithRequestData(blogPost)
                 .Build();
 
-            _scenarioContext.CreateBlogPostResponse = ApiRequestProcessor.Call(createBlogPostRequest);
+            _scenarioContext.PostRapidApiResponse = ApiRequestProcessor.Call(createBlogPostRequest);
         }
 
         private ApiResponse GetResponseFromContext(string responseType)
@@ -126,11 +102,11 @@ namespace RapidApiTests.Steps
             switch (responseType)
             {
                 case "Get":
-                    return _scenarioContext.GetBlogPostResponse;
+                    return _scenarioContext.GetRapidApiResponse;
                 case "Delete":
-                    return _scenarioContext.DeleteBlogPostResponse;
+                    return _scenarioContext.DeleteRapidApiResponse;
                 case "Post":
-                    return _scenarioContext.CreateBlogPostResponse;
+                    return _scenarioContext.PostRapidApiResponse;
                 default:
                     throw new ArgumentException("Unsupported response type", responseType);
             }
